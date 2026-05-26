@@ -10,9 +10,37 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState<any>(null)
 
+  // Sample demo data when user opens /dashboard?demo=1
+  const demoSample = {
+    total: 6,
+    open_value: 8500,
+    won_value: 4200,
+    followups_week: 2,
+    recent: [
+      { id: 'demo-1', name: 'Acme Co', company: 'Acme', deal_value: 1200 },
+      { id: 'demo-2', name: 'Beta LLC', company: 'Beta', deal_value: 3000 },
+    ],
+    by_status: [
+      { status: 'New', count: 3 },
+      { status: 'Contacted', count: 1 },
+      { status: 'Won', count: 1 },
+      { status: 'Lost', count: 1 },
+    ]
+  }
+
   useEffect(() => {
     let mounted = true
     async function load() {
+      try {
+        const params = new URLSearchParams(window.location.search)
+        if (params.get('demo') === '1') {
+          setStats(demoSample)
+          setLoading(false)
+          return
+        }
+      } catch {
+        // ignore if window not available
+      }
       const statsData = await getDashboardStats(supabase)
       if (mounted) {
         setStats(statsData)

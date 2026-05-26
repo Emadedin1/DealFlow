@@ -14,8 +14,17 @@ export default function SignupPage() {
     e.preventDefault()
     setError(null)
     const { data, error } = await supabase.auth.signUp({ email, password })
-    if (error) setError(error.message)
-    else router.push('/dashboard')
+    if (error) {
+      // Provide clearer guidance for common Supabase email errors
+      if (error.message?.toLowerCase().includes('rate')) {
+        setError('Sign-up email rate limit exceeded. Try again later or use the demo.')
+      } else {
+        setError(error.message)
+      }
+    } else {
+      // If session was created immediately, continue to dashboard
+      router.push('/dashboard')
+    }
   }
 
   return (
@@ -33,6 +42,7 @@ export default function SignupPage() {
         {error && <div className="text-red-600">{error}</div>}
         <div className="flex gap-2">
           <button className="px-4 py-2 bg-blue-600 text-white rounded">Sign up</button>
+          <a href="/dashboard?demo=1" className="px-4 py-2 border rounded text-gray-700">View demo</a>
         </div>
       </form>
     </main>

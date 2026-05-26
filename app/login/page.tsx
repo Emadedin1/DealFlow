@@ -14,8 +14,13 @@ export default function LoginPage() {
     e.preventDefault()
     setError(null)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) setError(error.message)
-    else router.push('/dashboard')
+    if (error) {
+      if (error.message?.toLowerCase().includes('rate')) {
+        setError('Sign-in rate limit exceeded. Try again later or use the demo.')
+      } else {
+        setError(error.message)
+      }
+    } else router.push('/dashboard')
   }
 
   return (
@@ -33,6 +38,7 @@ export default function LoginPage() {
         {error && <div className="text-red-600">{error}</div>}
         <div className="flex gap-2">
           <button className="px-4 py-2 bg-blue-600 text-white rounded">Sign in</button>
+          <a href="/dashboard?demo=1" className="px-4 py-2 border rounded text-gray-700">View demo</a>
         </div>
       </form>
     </main>
