@@ -2,6 +2,8 @@
 
 A simple CRM dashboard for student freelancers, solo service providers, and small agency owners to track leads, follow-ups, deal stages, notes, and projected revenue.
 
+DEMO VIDEO HERE -> https://youtu.be/AV4-lulkIbM
+
 Features
 - Sign up / Log in with Supabase Auth
 - Create, read, update, delete leads
