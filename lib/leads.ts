@@ -9,8 +9,14 @@ export async function getLead(supabase: SupabaseClient, id: string) {
 }
 
 export async function createLead(supabase: SupabaseClient, payload: any) {
-  const user = await supabase.auth.getUser()
-  const user_id = user.data?.user?.id
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+  if (sessionError) {
+    throw new Error(sessionError.message)
+  }
+  const user_id = sessionData?.session?.user?.id
+  if (!user_id) {
+    throw new Error('User is not signed in')
+  }
   return supabase.from('leads').insert([{ ...payload, user_id }])
 }
 

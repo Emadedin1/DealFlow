@@ -24,14 +24,18 @@ export default function LeadForm({ initial = {}, onSubmit }: any) {
 
   function update(field: string, value: any) { setForm(prev => ({ ...prev, [field]: value })) }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
     if (!form.name) return setError('Name is required')
     if (!form.status) return setError('Status is required')
     if (form.email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.email)) return setError('Email is invalid')
     const payload = { ...form, deal_value: form.deal_value ? Number(form.deal_value) : null }
-    onSubmit(payload)
+    try {
+      await onSubmit(payload)
+    } catch (err: any) {
+      setError(err?.message || 'Unable to save lead')
+    }
   }
 
   return (
