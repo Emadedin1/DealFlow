@@ -30,10 +30,17 @@ export default function LeadForm({ initial = {}, onSubmit }: any) {
     if (!form.name) return setError('Name is required')
     if (!form.status) return setError('Status is required')
     if (form.email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.email)) return setError('Email is invalid')
-    const payload = { ...form, deal_value: form.deal_value ? Number(form.deal_value) : null }
+    // sanitize fields: convert empty date strings to null and deal_value to number or null
+    const payload = {
+      ...form,
+      deal_value: form.deal_value !== '' && form.deal_value != null ? Number(form.deal_value) : null,
+      last_contacted_date: form.last_contacted_date && form.last_contacted_date !== '' ? form.last_contacted_date : null,
+      next_follow_up_date: form.next_follow_up_date && form.next_follow_up_date !== '' ? form.next_follow_up_date : null
+    }
     try {
       await onSubmit(payload)
     } catch (err: any) {
+      // show server error message in UI
       setError(err?.message || 'Unable to save lead')
     }
   }

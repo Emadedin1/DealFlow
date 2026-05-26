@@ -17,7 +17,23 @@ export async function createLead(supabase: SupabaseClient, payload: any) {
   if (!user_id) {
     throw new Error('User is not signed in')
   }
-  return supabase.from('leads').insert([{ ...payload, user_id }])
+  // sanitize payload: convert empty strings for dates/numbers to null
+  const sanitized = { ...payload }
+  const dateFields = ['last_contacted_date', 'next_follow_up_date']
+  for (const f of dateFields) {
+    if (sanitized[f] === '') sanitized[f] = null
+  }
+  if (sanitized.deal_value === '' || sanitized.deal_value == null) {
+    sanitized.deal_value = null
+  }
+
+  const res = await supabase.from('leads').insert([{ ...sanitized, user_id }])
+  if (res.error) {
+    // log full Supabase error object for debugging
+    console.error('Supabase insert error:', res.error)
+    throw new Error(res.error.message || 'Failed to create lead')
+  }
+  return res.data
 }
 
 export async function updateLead(supabase: SupabaseClient, id: string, payload: any) {
