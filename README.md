@@ -46,16 +46,8 @@ Database notes
 Known limitations
 - This is a small demo app. Invitation flows, password reset, and advanced security considerations are not implemented.
 
-Future improvements
-- Add pagination and sorting controls
-- Better date formatting and localization
-- Add CSV export/import for leads
-
-Resume bullets
-- Built a full-stack CRM web app using Next.js, TypeScript, Supabase, and PostgreSQL to help freelancers manage leads, follow-ups, deal stages, and revenue pipeline data.
-- Implemented authenticated user-specific lead management with protected routes, row-level security, searchable/filterable lead views, CRUD workflows, and dashboard metrics.
-
 Screenshots
-- (Add screenshots here)
+<img width="1911" height="819" alt="Image 2026-05-26 at 11 34 AM" src="https://github.com/user-attachments/assets/c0a0d6d3-41ff-4a8e-80b5-2cb639e3f5d5" />
+
 # DealFlow
 Full-stack CRM dashboard for freelancers to track leads, follow-ups, deal stages, and revenue pipeline.
