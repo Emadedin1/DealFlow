@@ -9,7 +9,7 @@ export default function Home() {
           <p className="mt-4 text-gray-600">DealFlow helps freelancers and student entrepreneurs manage their client pipeline without messy spreadsheets.</p>
           <div className="mt-6 flex gap-3">
             <Link href="/signup" className="px-4 py-2 bg-blue-600 text-white rounded">Get Started</Link>
-            <Link href="/dashboard" className="px-4 py-2 border border-gray-200 rounded">View Demo</Link>
+            <a href="https://youtu.be/AV4-lulkIbM" target="_blank" rel="noreferrer" className="px-4 py-2 border border-gray-200 rounded">View Demo</a>
           </div>
         </div>
         <div>
